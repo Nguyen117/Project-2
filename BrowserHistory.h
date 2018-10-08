@@ -12,15 +12,53 @@ class BrowserHistory {
 public:
     BrowserHistory();
 
-    void visitSite(Webpage newSite);
-    string back();
-    string forward();
+    void visitSite(Webpage newSite)
+	{
+		navHistory.push_back(newSite);
+		sitesVisited.push_back(newSite);
+		navPos = navHistory.end();
+		navPos = sitesVisted.end();
+	}
+    string back()
+	{
+		if (navPos != navHistory.begin())
+		{
+			navPos--;
+		}
+		else
+		{
+			cout << "You are at the beginning of the list" << endl;
+			return navPos->getUrl;
+		}
+		
+	}
+	string forward()
+	{
+		if (navPos != navHistory.end())
+		{
+			navPos++;
+		}
+		else
+		{
+			cout << "You are at the end of the list" << endl;
+			return navPos->getUrl;
+		}
+	}
 
     void readHistory(string fileName);
 
-    string getUrl();
-    size_t getNavSize();
-    list<Webpage> getSitesVisited();
+	string getUrl()
+	{
+		return navPos->getUrl;
+	}
+	size_t getNavSize()
+	{
+		return navHistory.size();
+	}
+	list<Webpage> getSitesVisited()
+	{
+		return sitesVisited;
+	}
 
 private:
     list<Webpage> navHistory;
@@ -29,7 +67,8 @@ private:
     int numSites;
 };
 
-void BrowserHistory::readHistory(string fileName) {
+void BrowserHistory::readHistory(string fileName) 
+{
     string temp;
     int newTime;
     Webpage newSite;
